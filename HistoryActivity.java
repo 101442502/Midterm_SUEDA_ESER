@@ -2,35 +2,30 @@ package com.midterm.sueda;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 import java.util.ArrayList;
 
 public class HistoryActivity extends AppCompatActivity {
 
-    ListView listView;
-    ArrayList<String> tableList = new ArrayList<>();
-    ArrayAdapter<String> adapter;
+    ListView historyListView;
+    ArrayAdapter<Integer> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_history);
 
-        listView = findViewById(R.id.listView);
+        historyListView = findViewById(R.id.historyListView);
 
-        String number = getIntent().getStringExtra("number");
+        ArrayList<Integer> data = MainActivity.historyNumbers;
 
-        if (number != null && !number.isEmpty()) {
-            int n = Integer.parseInt(number);
-
-            for (int i = 1; i <= 10; i++) {
-                tableList.add(n + " x " + i + " = " + (n * i));
-            }
+        if (data.isEmpty()) {
+            Toast.makeText(this, "No history yet", Toast.LENGTH_SHORT).show();
         }
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tableList);
-        listView.setAdapter(adapter);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, data);
+        historyListView.setAdapter(adapter);
     }
 }
-
